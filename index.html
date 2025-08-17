@@ -1,194 +1,96 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>My Starter Site</title>
-  <meta name="description" content="Clean, responsive one‑page website starter." />
-  <meta property="og:title" content="My Starter Site" />
-  <meta property="og:description" content="Clean, responsive one‑page website starter." />
-  <meta property="og:type" content="website" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #0b1020;
-      --card: #121833;
-      --text: #e9ecf1;
-      --muted: #b8bfd1;
-      --accent: #7aa2ff;
-      --accent-2: #9bffd6;
-      --ring: rgba(122,162,255,.5);
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: radial-gradient(1200px 800px at 80% -10%, rgba(122,162,255,.08), transparent), var(--bg); color: var(--text); }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(1100px, 92vw); margin: 0 auto; }
-    .btn { display:inline-flex; align-items:center; gap:.5rem; padding:.8rem 1.1rem; border-radius:14px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color:#0b1020; font-weight:700; border:0; cursor:pointer; box-shadow:0 10px 24px rgba(122,162,255,.25); }
-    .btn:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
-    header { position: sticky; top: 0; backdrop-filter: blur(8px); background: rgba(11,16,32,.6); border-bottom: 1px solid rgba(255,255,255,.06); z-index: 20; }
-    .nav { display:flex; align-items:center; justify-content:space-between; padding:.9rem 0; }
-    .brand { font-weight:800; letter-spacing:.5px; }
-    nav a { opacity:.9; }
-    .links { display:flex; gap:1.1rem; align-items:center; }
-    .menu-btn { display:none; background:transparent; border:1px solid rgba(255,255,255,.2); color:var(--text); padding:.5rem .7rem; border-radius:10px; }
-    @media (max-width: 760px) {
-      .links { display:none; }
-      .menu-btn { display:inline-flex; }
-      .mobile { display:none; position:absolute; inset:56px 0 auto 0; background:rgba(11,16,32,.98); border-bottom:1px solid rgba(255,255,255,.08); padding:1rem 4vw; }
-      .mobile a { display:block; padding: .9rem 0; border-top:1px solid rgba(255,255,255,.06); }
-    }
-
-    .hero { padding: 80px 0 60px; display:grid; grid-template-columns: 1.1fr .9fr; gap: 3rem; align-items:center; }
-    .hero h1 { font-size: clamp(2rem, 4vw + .5rem, 3.2rem); line-height: 1.1; margin: 0 0 .8rem; }
-    .hero p { color: var(--muted); font-size: 1.05rem; }
-    .hero .card { background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border: 1px solid rgba(255,255,255,.08); padding: 1rem; border-radius: 18px; box-shadow: 0 8px 30px rgba(0,0,0,.35); }
-    .hero img { width: 100%; height: auto; border-radius: 14px; display:block; }
-    @media (max-width: 900px) { .hero { grid-template-columns: 1fr; padding: 56px 0; } }
-
-    section { padding: 56px 0; }
-    .section-title { font-size: 1.6rem; margin: 0 0 .8rem; }
-    .muted { color: var(--muted); }
-
-    .grid { display:grid; gap: 1rem; }
-    .projects { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
-    .card { background: var(--card); border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 1rem; }
-    .card h3 { margin: .2rem 0 .4rem; font-size: 1.1rem; }
-
-    .about { display:grid; gap:2rem; grid-template-columns: 1fr 1fr; }
-    @media (max-width: 900px) { .about { grid-template-columns: 1fr; } }
-
-    form { display:grid; gap:.8rem; max-width: 560px; }
-    input, textarea { width:100%; padding:.9rem 1rem; border-radius:12px; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.03); color:var(--text); }
-    input:focus, textarea:focus { outline: 2px solid var(--ring); border-color: transparent; }
-    footer { padding: 40px 0 60px; border-top:1px solid rgba(255,255,255,.08); color:var(--muted); font-size:.95rem; }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FixMyHome — Connection Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b1020;--card:#121833;--text:#e9ecf1;--muted:#b8bfd1;--accent:#7aa2ff;--ring:rgba(122,162,255,.5)}
+  *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+  .container{width:min(1000px,92vw);margin:0 auto;padding:28px 0}
+  .card{background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:1rem}
+  h1{margin:.2rem 0 1rem} .muted{color:var(--muted)}
+  input,button{padding:.8rem 1rem;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.03);color:var(--text)}
+  button{cursor:pointer;background:var(--accent);border:0;color:#0b1020;font-weight:700}
+  pre{white-space:pre-wrap;word-wrap:break-word;background:#0f1530;border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,.08);max-height:320px;overflow:auto}
+  .row{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+  .pill{display:inline-block;padding:.35rem .6rem;border:1px solid rgba(255,255,255,.15);border-radius:999px}
+</style>
 </head>
 <body>
-  <header>
-    <div class="container nav">
-      <a class="brand" href="#top">Your Name</a>
-      <nav aria-label="Primary">
-        <div class="links" id="links">
-          <a href="#about">About</a>
-          <a href="#projects">Projects</a>
-          <a href="#contact">Contact</a>
-          <a href="#" class="btn" role="button">Download CV</a>
-        </div>
-        <button class="menu-btn" aria-expanded="false" aria-controls="mobileMenu" id="menuBtn">Menu</button>
-      </nav>
+<div class="container">
+  <h1>FixMyHome — Supabase Connection</h1>
+  <p class="muted">This page only verifies that your website can talk to your Supabase database. You’ll see the result below.</p>
+
+  <div class="card" style="margin-top:1rem">
+    <div class="row" style="justify-content:space-between">
+      <strong>Status:</strong>
+      <span id="status" class="pill">Not tested</span>
     </div>
-    <div class="mobile container" id="mobileMenu" aria-hidden="true">
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
+
+    <div style="margin:.8rem 0">
+      <button id="testBtn">Test Supabase Connection</button>
     </div>
-  </header>
 
-  <main id="top" class="container">
-    <section class="hero" aria-labelledby="hero-title">
-      <div>
-        <h1 id="hero-title">I build simple, fast websites.</h1>
-        <p>Welcome! This starter is perfect for a personal site, portfolio, or small business landing page. Swap in your own text and images and you're live in minutes.</p>
-        <div style="display:flex; gap:.8rem; margin-top:1rem;">
-          <a href="#projects" class="btn">See my work</a>
-          <a href="#contact" class="btn" style="background:transparent;border:1px solid rgba(255,255,255,.18);color:var(--text);box-shadow:none;">Contact me</a>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1484417894907-623942c8ee29?q=80&w=1600&auto=format&fit=crop" alt="Abstract gradient shapes" />
-      </div>
-    </section>
+    <p class="muted">Result log:</p>
+    <pre id="log"></pre>
 
-    <section id="about" class="about" aria-labelledby="about-title">
-      <div>
-        <h2 id="about-title" class="section-title">About me</h2>
-        <p class="muted">Replace this with a short intro in plain language—what you do, who you help, and what makes you different. Keep it friendly and specific.</p>
-        <ul>
-          <li>✅ 2–3 bullet points about your strengths</li>
-          <li>✅ Tools you use (e.g., Figma, Notion, Webflow)</li>
-          <li>✅ A small personal detail to feel human</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Quick facts</h3>
-        <p class="muted">Based in City · Available for freelance · Open to collabs</p>
-        <div class="grid" style="grid-template-columns:repeat(2,1fr); gap: .8rem;">
-          <div class="card"><strong>5+</strong><br/>Projects shipped</div>
-          <div class="card"><strong>~1s</strong><br/>Page load</div>
-          <div class="card"><strong>100%</strong><br/>Lighthouse a11y</div>
-          <div class="card"><strong>0</strong><br/>Build steps</div>
-        </div>
-      </div>
-    </section>
+    <p class="muted" style="margin-top:.6rem">
+      Reminder: in Supabase → <em>Authentication → URL Configuration</em>, set
+      <code>Site URL</code> and a <code>Redirect URL</code> to <code>https://axlth.github.io</code>.
+    </p>
+  </div>
+</div>
 
-    <section id="projects" aria-labelledby="projects-title">
-      <h2 id="projects-title" class="section-title">Projects</h2>
-      <p class="muted">Swap these cards for your real work. Link them to live demos or GitHub.</p>
-      <div class="grid projects">
-        <article class="card">
-          <img alt="Project screenshot" style="width:100%;height:auto;border-radius:10px;" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1400&auto=format&fit=crop" />
-          <h3>Project One</h3>
-          <p class="muted">One‑sentence summary of what you built and why it matters.</p>
-          <p><a href="#">View project →</a></p>
-        </article>
-        <article class="card">
-          <img alt="Project screenshot" style="width:100%;height:auto;border-radius:10px;" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1400&auto=format&fit=crop" />
-          <h3>Project Two</h3>
-          <p class="muted">One‑sentence summary of what you built and why it matters.</p>
-          <p><a href="#">View project →</a></p>
-        </article>
-        <article class="card">
-          <img alt="Project screenshot" style="width:100%;height:auto;border-radius:10px;" src="https://images.unsplash.com/photo-1505238680356-667803448bb6?q=80&w=1400&auto=format&fit=crop" />
-          <h3>Project Three</h3>
-          <p class="muted">One‑sentence summary of what you built and why it matters.</p>
-          <p><a href="#">View project →</a></p>
-        </article>
-      </div>
-    </section>
+<!-- Supabase JS -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script>
+  // 🔐 Replace these with your real values from Settings → API
+  const SUPABASE_URL = "https://yeexofhlqmjgxvgoibfb.supabase.co"; // e.g., https://abcd1234.supabase.co
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InllZXhvZmhscW1qZ3h2Z29pYmZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU0NjgzNTEsImV4cCI6MjA3MTA0NDM1MX0.48YGypaZ-uN7ved_X2LdzkajfT7ePUG61kM6Hz7s68U";
 
-    <section id="contact" aria-labelledby="contact-title">
-      <h2 id="contact-title" class="section-title">Contact</h2>
-      <p class="muted">This form is a visual placeholder. Without a backend, the button just opens your email app. That’s perfect for a starter site.</p>
-      <form onsubmit="event.preventDefault(); window.location='mailto:hello@example.com?subject=Website%20inquiry';" aria-label="Contact form">
-        <label>
-          <span class="muted">Your name</span>
-          <input type="text" name="name" placeholder="Jane Doe" required>
-        </label>
-        <label>
-          <span class="muted">Your email</span>
-          <input type="email" name="email" placeholder="you@example.com" required>
-        </label>
-        <label>
-          <span class="muted">Message</span>
-          <textarea name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
-        </label>
-        <button class="btn" type="submit">Send email</button>
-      </form>
-    </section>
-  </main>
+  // Create client
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  <footer>
-    <div class="container">
-      © <span id="year"></span> Your Name — Built with ❤️
-    </div>
-  </footer>
+  const $ = (id)=>document.getElementById(id);
+  const logEl = $("log");
+  const statusEl = $("status");
+  const testBtn = $("testBtn");
 
-  <script>
-    // mobile nav toggle
-    const btn = document.getElementById('menuBtn');
-    const menu = document.getElementById('mobileMenu');
-    btn?.addEventListener('click', () => {
-      const open = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!open));
-      menu.style.display = open ? 'none' : 'block';
-      menu.setAttribute('aria-hidden', String(open));
-    });
+  function log(msg){
+    const time = new Date().toLocaleTimeString();
+    logEl.textContent += `[${time}] ${msg}\n`;
+    logEl.scrollTop = logEl.scrollHeight;
+  }
 
-    // current year
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  async function testConnection(){
+    statusEl.textContent = "Testing…";
+    statusEl.style.borderColor = "rgba(255,255,255,.35)";
+    log("Querying table: skills");
+
+    try {
+      const { data, error } = await sb.from("skills").select("*").order("name");
+      if (error) throw error;
+      log(`✅ Connected. Received ${data.length} rows from 'skills'.`);
+      if (data.length) {
+        log("Sample rows: " + data.slice(0, 5).map(r => r.name).join(", "));
+      }
+      statusEl.textContent = "Connected";
+      statusEl.style.borderColor = "#7bffa1";
+    } catch (err) {
+      log("❌ Error: " + (err?.message || String(err)));
+      statusEl.textContent = "Failed";
+      statusEl.style.borderColor = "#ffa1a1";
+    }
+  }
+
+  testBtn.addEventListener("click", testConnection);
+
+  // Auto-test on load
+  window.addEventListener("load", testConnection);
+</script>
 </body>
 </html>
