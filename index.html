@@ -3,94 +3,171 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>FixMyHome — Connection Test</title>
+<title>FixMyHome — Auth (Email & Password)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
   :root{--bg:#0b1020;--card:#121833;--text:#e9ecf1;--muted:#b8bfd1;--accent:#7aa2ff;--ring:rgba(122,162,255,.5)}
   *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
-  .container{width:min(1000px,92vw);margin:0 auto;padding:28px 0}
+  .container{width:min(900px,92vw);margin:0 auto;padding:28px 0}
   .card{background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:1rem}
-  h1{margin:.2rem 0 1rem} .muted{color:var(--muted)}
-  input,button{padding:.8rem 1rem;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.03);color:var(--text)}
-  button{cursor:pointer;background:var(--accent);border:0;color:#0b1020;font-weight:700}
-  pre{white-space:pre-wrap;word-wrap:break-word;background:#0f1530;border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,.08);max-height:320px;overflow:auto}
+  h1{margin:.2rem 0 1rem} h2{margin:.2rem 0 1rem}
+  .muted{color:var(--muted)}
+  label{display:block;margin:.6rem 0 .2rem;color:var(--muted)}
+  input{width:100%;padding:.8rem 1rem;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.03);color:var(--text)}
+  button{cursor:pointer;padding:.8rem 1rem;border-radius:12px;border:0;background:var(--accent);color:#0b1020;font-weight:700}
   .row{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
   .pill{display:inline-block;padding:.35rem .6rem;border:1px solid rgba(255,255,255,.15);border-radius:999px}
+  .tabs{display:flex;gap:.5rem;margin-bottom:.6rem}
+  .tab{border:1px solid rgba(255,255,255,.2);background:transparent;color:var(--text)}
+  .tab.active{background:var(--accent);color:#0b1020;border:0}
+  .hide{display:none}
+  pre{white-space:pre-wrap;word-break:break-word;background:#0f1530;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px;max-height:220px;overflow:auto}
 </style>
 </head>
 <body>
 <div class="container">
-  <h1>FixMyHome — Supabase Connection</h1>
-  <p class="muted">This page only verifies that your website can talk to your Supabase database. You’ll see the result below.</p>
+  <h1>FixMyHome — Sign up / Log in</h1>
+  <p class="muted">Email + password only (we can add Google later). After logging in, you’ll see your session info below.</p>
 
   <div class="card" style="margin-top:1rem">
-    <div class="row" style="justify-content:space-between">
-      <strong>Status:</strong>
-      <span id="status" class="pill">Not tested</span>
+    <div class="tabs">
+      <button class="tab active" id="tab-signup" type="button">Sign up</button>
+      <button class="tab" id="tab-login" type="button">Log in</button>
     </div>
 
-    <div style="margin:.8rem 0">
-      <button id="testBtn">Test Supabase Connection</button>
-    </div>
+    <!-- Sign up -->
+    <form id="form-signup">
+      <label>Email</label>
+      <input id="su-email" type="email" placeholder="you@example.com" required />
+      <label>Password</label>
+      <input id="su-password" type="password" placeholder="Minimum 6 characters" required />
+      <div class="row" style="margin-top:.8rem">
+        <button type="submit">Create account</button>
+        <span id="su-msg" class="muted"></span>
+      </div>
+    </form>
 
-    <p class="muted">Result log:</p>
-    <pre id="log"></pre>
-
-    <p class="muted" style="margin-top:.6rem">
-      Reminder: in Supabase → <em>Authentication → URL Configuration</em>, set
-      <code>Site URL</code> and a <code>Redirect URL</code> to <code>https://axlth.github.io</code>.
-    </p>
+    <!-- Log in -->
+    <form id="form-login" class="hide">
+      <label>Email</label>
+      <input id="li-email" type="email" placeholder="you@example.com" required />
+      <label>Password</label>
+      <input id="li-password" type="password" placeholder="Your password" required />
+      <div class="row" style="margin-top:.8rem">
+        <button type="submit">Log in</button>
+        <span id="li-msg" class="muted"></span>
+      </div>
+    </form>
   </div>
+
+  <!-- Session -->
+  <div class="card" style="margin-top:1rem">
+    <h2>Session</h2>
+    <div class="row">
+      <span id="session-status" class="pill">Signed out</span>
+      <button id="btn-logout" class="hide" type="button">Log out</button>
+    </div>
+    <p class="muted" style="margin:.6rem 0">User info:</p>
+    <pre id="session-info">(not signed in)</pre>
+  </div>
+
+  <p class="muted" style="margin-top:1rem">
+    If sign-up requires email confirmation, check your inbox. You can disable confirmations in:
+    <em>Supabase → Authentication → Email → Confirm email</em>.
+  </p>
 </div>
 
-<!-- Supabase JS -->
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script>
-  // 🔐 Replace these with your real values from Settings → API
-  const SUPABASE_URL = "https://yeexofhlqmjgxvgoibfb.supabase.co"; // e.g., https://abcd1234.supabase.co
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InllZXhvZmhscW1qZ3h2Z29pYmZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU0NjgzNTEsImV4cCI6MjA3MTA0NDM1MX0.48YGypaZ-uN7ved_X2LdzkajfT7ePUG61kM6Hz7s68U";
+  // 🔐 Replace with your real values (Settings → API)
+  const SUPABASE_URL = "https://YOUR_SUPABASE_URL.supabase.co";
+  const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
 
   // Create client
   const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+  // UI helpers
   const $ = (id)=>document.getElementById(id);
-  const logEl = $("log");
-  const statusEl = $("status");
-  const testBtn = $("testBtn");
+  const statusEl = $("session-status");
+  const infoEl = $("session-info");
+  const btnLogout = $("btn-logout");
+  const tabSignup = $("tab-signup");
+  const tabLogin = $("tab-login");
+  const formSignup = $("form-signup");
+  const formLogin = $("form-login");
+  const suMsg = $("su-msg");
+  const liMsg = $("li-msg");
 
-  function log(msg){
-    const time = new Date().toLocaleTimeString();
-    logEl.textContent += `[${time}] ${msg}\n`;
-    logEl.scrollTop = logEl.scrollHeight;
-  }
+  // Tabs
+  function showSignup(){ formSignup.classList.remove("hide"); formLogin.classList.add("hide"); tabSignup.classList.add("active"); tabLogin.classList.remove("active"); }
+  function showLogin(){ formLogin.classList.remove("hide"); formSignup.classList.add("hide"); tabLogin.classList.add("active"); tabSignup.classList.remove("active"); }
+  tabSignup.addEventListener("click", showSignup);
+  tabLogin.addEventListener("click", showLogin);
 
-  async function testConnection(){
-    statusEl.textContent = "Testing…";
-    statusEl.style.borderColor = "rgba(255,255,255,.35)";
-    log("Querying table: skills");
-
-    try {
-      const { data, error } = await sb.from("skills").select("*").order("name");
-      if (error) throw error;
-      log(`✅ Connected. Received ${data.length} rows from 'skills'.`);
-      if (data.length) {
-        log("Sample rows: " + data.slice(0, 5).map(r => r.name).join(", "));
-      }
-      statusEl.textContent = "Connected";
-      statusEl.style.borderColor = "#7bffa1";
-    } catch (err) {
-      log("❌ Error: " + (err?.message || String(err)));
-      statusEl.textContent = "Failed";
-      statusEl.style.borderColor = "#ffa1a1";
+  // Refresh session UI
+  async function refreshSession(){
+    const { data: { session } } = await sb.auth.getSession();
+    if(session?.user){
+      statusEl.textContent = "Signed in";
+      btnLogout.classList.remove("hide");
+      infoEl.textContent = JSON.stringify({
+        id: session.user.id,
+        email: session.user.email,
+        created_at: session.user.created_at
+      }, null, 2);
+    } else {
+      statusEl.textContent = "Signed out";
+      btnLogout.classList.add("hide");
+      infoEl.textContent = "(not signed in)";
     }
   }
 
-  testBtn.addEventListener("click", testConnection);
+  // Sign up
+  formSignup.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    suMsg.textContent = "Creating account…";
+    const email = $("su-email").value.trim();
+    const password = $("su-password").value;
+    const { data, error } = await sb.auth.signUp({
+      email, password,
+      options: { emailRedirectTo: window.location.origin }
+    });
+    if(error){ suMsg.textContent = "Error: " + error.message; return; }
+    // If email confirmations are ON, user must click link first
+    if(!data.session){
+      suMsg.textContent = "Account created. Check your email to confirm.";
+    } else {
+      suMsg.textContent = "Account created and signed in.";
+    }
+    await refreshSession();
+  });
 
-  // Auto-test on load
-  window.addEventListener("load", testConnection);
+  // Log in
+  formLogin.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    liMsg.textContent = "Signing in…";
+    const email = $("li-email").value.trim();
+    const password = $("li-password").value;
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+    if(error){ liMsg.textContent = "Error: " + error.message; return; }
+    liMsg.textContent = "Signed in.";
+    await refreshSession();
+  });
+
+  // Log out
+  btnLogout.addEventListener("click", async ()=>{
+    await sb.auth.signOut();
+    await refreshSession();
+  });
+
+  // Handle auth state changes (e.g., after email confirmation redirect)
+  sb.auth.onAuthStateChange((_event, _session)=> refreshSession());
+
+  // Initial
+  refreshSession();
 </script>
 </body>
 </html>
+
